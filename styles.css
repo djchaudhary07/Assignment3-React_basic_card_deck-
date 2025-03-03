@@ -1,5 +1,19 @@
 body {
     background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
+  }
+  
+  .deck {
+    width: 150px;
+    height: 200px;
+    background-color: #28a745;
+    color: #fff;
+    text-align: center;
+    line-height: 200px;
+  }
+  
+  .hand {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
   }
   
