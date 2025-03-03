@@ -97,11 +97,18 @@
                 setPickedIndex(null);
             };
 
+            const resetDeck = () => {
+                setDeck([...deck, ...hand]);
+                setHand([]);
+                setPickedIndex(null);
+            };
+
             return (
                 <div>
                     <div className="d-flex justify-content-center mb-3">
                         <button onClick={() => dealCards(5)}>Deal 5</button>
                         <button onClick={() => dealCards(7)}>Deal 7</button>
+                        <button onClick={resetDeck}>Reset</button>
                     </div>
                     <div className="deck" onClick={handleDeckClick}>
                         Deck ({deck.length})
