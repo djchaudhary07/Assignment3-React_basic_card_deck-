@@ -76,13 +76,12 @@
                     setPickedIndex(null);
                 } else {
                     const newHand = [...hand];
-                    // BUG: Incorrect swap logic (swaps the same element instead of using the other index)
-                    [newHand[pickedIndex], newHand[pickedIndex]] = [newHand[pickedIndex], newHand[index]];
+                    // Correct swap: swap the elements at pickedIndex and the new index
+                    [newHand[pickedIndex], newHand[index]] = [newHand[index], newHand[pickedIndex]];
                     setHand(newHand);
                     setPickedIndex(null);
                 }
             };
-
 
             // New function: Deal a specific number of cards
             const dealCards = (num) => {
