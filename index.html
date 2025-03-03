@@ -76,11 +76,13 @@
                     setPickedIndex(null);
                 } else {
                     const newHand = [...hand];
-                    [newHand[pickedIndex], newHand[index]] = [newHand[index], newHand[pickedIndex]];
+                    // BUG: Incorrect swap logic (swaps the same element instead of using the other index)
+                    [newHand[pickedIndex], newHand[pickedIndex]] = [newHand[pickedIndex], newHand[index]];
                     setHand(newHand);
                     setPickedIndex(null);
                 }
             };
+
 
             // New function: Deal a specific number of cards
             const dealCards = (num) => {
@@ -129,35 +131,35 @@
                 setHand([...hand, card]);
             };
 
-                return (
-                    <div>
-                        <div className="d-flex justify-content-center mb-3">
-                            <button onClick={() => dealCards(5)}>Deal 5</button>
-                            <button onClick={() => dealCards(7)}>Deal 7</button>
-                            <button onClick={resetDeck}>Reset</button>
-                            <button onClick={tossCard}>Toss</button>
-                            <button onClick={regroupHand}>Regroup</button>
-                            <button onClick={addWildcard}>Wildcard</button>
-                        </div>
-                        <div className="deck" onClick={handleDeckClick}>
-                            Deck ({deck.length})
-                        </div>
-                        <div className="hand">
-                            {hand.map((card, index) => (
-                                <Card
-                                    key={index}
-                                    suit={card.suit}
-                                    value={card.value}
-                                    picked={pickedIndex === index}
-                                    onClick={() => handleCardClick(index)}
-                                />
-                            ))}
-                        </div>
+            return (
+                <div>
+                    <div className="d-flex justify-content-center mb-3">
+                        <button onClick={() => dealCards(5)}>Deal 5</button>
+                        <button onClick={() => dealCards(7)}>Deal 7</button>
+                        <button onClick={resetDeck}>Reset</button>
+                        <button onClick={tossCard}>Toss</button>
+                        <button onClick={regroupHand}>Regroup</button>
+                        <button onClick={addWildcard}>Wildcard</button>
                     </div>
-                );
-            };
-    
-            ReactDOM.render(<App />, document.getElementById('root'));
+                    <div className="deck" onClick={handleDeckClick}>
+                        Deck ({deck.length})
+                    </div>
+                    <div className="hand">
+                        {hand.map((card, index) => (
+                            <Card
+                                key={index}
+                                suit={card.suit}
+                                value={card.value}
+                                picked={pickedIndex === index}
+                                onClick={() => handleCardClick(index)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 
 </body>
