@@ -119,6 +119,16 @@
                 setHand(newHand);
             };
 
+            const addWildcard = () => {
+                const suits = ["♥", "♦", "♣", "♠"];
+                const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+                const card = {
+                    suit: suits[Math.floor(Math.random() * suits.length)],
+                    value: values[Math.floor(Math.random() * values.length)]
+                };
+                setHand([...hand, card]);
+            };
+
             return (
                 <div>
                     <div className="d-flex justify-content-center mb-3">
@@ -127,6 +137,7 @@
                         <button onClick={resetDeck}>Reset</button>
                         <button onClick={tossCard}>Toss</button>
                         <button onClick={regroupHand}>Regroup</button>
+                        <button onClick={addWildcard}>Wildcard</button>
                     </div>
                     <div className="deck" onClick={handleDeckClick}>
                         Deck ({deck.length})
