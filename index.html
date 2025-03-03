@@ -68,6 +68,20 @@
                 }
             };
 
+            // Function to select a card or swap if one is already picked
+            const handleCardClick = (index) => {
+                if (pickedIndex === null) {
+                    setPickedIndex(index);
+                } else if (pickedIndex === index) {
+                    setPickedIndex(null);
+                } else {
+                    const newHand = [...hand];
+                    [newHand[pickedIndex], newHand[index]] = [newHand[index], newHand[pickedIndex]];
+                    setHand(newHand);
+                    setPickedIndex(null);
+                }
+            };
+
             return (
                 <div>
                     <div className="deck" onClick={drawCard}>
