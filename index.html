@@ -61,6 +61,13 @@
                 setHand([...hand, card]);
             };
 
+            // New handler wrapping drawCard
+            const handleDeckClick = () => {
+                if (deck.length > 0) {
+                    drawCard();
+                }
+            };
+
             return (
                 <div>
                     <div className="deck" onClick={drawCard}>
