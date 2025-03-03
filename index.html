@@ -21,14 +21,27 @@
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
     <!-- Embedded React code -->
+     
     <script type="text/babel">
-      const App = () => {
-        return <h1>Hello, React Card Deck App!</h1>;
-      };
-
-      ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
+        // Card component: displays card value and suit
+        const Card = ({ suit, value, picked, onClick }) => {
+          const redSuits = ["♥", "♦"];
+          return (
+            <div className={"card " + (picked ? "picked" : "")} onClick={onClick}>
+              {value} <span className={redSuits.includes(suit) ? "red-suit" : ""}>{suit}</span>
+            </div>
+          );
+        };
+      
+        const App = () => {
+          return <h1>Card Component Ready</h1>;
+        };
+      
+        ReactDOM.render(<App />, document.getElementById('root'));
+      </script>
+      
 </body>
 
 </html>
