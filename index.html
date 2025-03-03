@@ -103,12 +103,19 @@
                 setPickedIndex(null);
             };
 
+            const tossCard = () => {
+                if (pickedIndex !== null) {
+                    setHand(hand.filter((_, i) => i !== pickedIndex));
+                    setPickedIndex(null);
+                }
+            };
             return (
                 <div>
                     <div className="d-flex justify-content-center mb-3">
                         <button onClick={() => dealCards(5)}>Deal 5</button>
                         <button onClick={() => dealCards(7)}>Deal 7</button>
                         <button onClick={resetDeck}>Reset</button>
+                        <button onClick={tossCard}>Toss</button>
                     </div>
                     <div className="deck" onClick={handleDeckClick}>
                         Deck ({deck.length})
