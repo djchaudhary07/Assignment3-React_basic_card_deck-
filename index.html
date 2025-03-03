@@ -21,27 +21,63 @@
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
+
     <!-- Embedded React code -->
-     
+
     <script type="text/babel">
-        // Card component: displays card value and suit
+        // Card component remains unchanged
         const Card = ({ suit, value, picked, onClick }) => {
-          const redSuits = ["♥", "♦"];
-          return (
-            <div className={"card " + (picked ? "picked" : "")} onClick={onClick}>
-              {value} <span className={redSuits.includes(suit) ? "red-suit" : ""}>{suit}</span>
-            </div>
-          );
+            const redSuits = ["♥", "♦"];
+            return (
+                <div className={"card " + (picked ? "picked" : "")} onClick={onClick}>
+                    {value} <span className={redSuits.includes(suit) ? "red-suit" : ""}>{suit}</span>
+                </div>
+            );
         };
-      
+
+        // Function to create a 52-card deck
+        const createDeck = () => {
+            const suits = ["♥", "♦", "♣", "♠"];
+            const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+            let deck = [];
+            suits.forEach((suit) => {
+                values.forEach((value) => {
+                    deck.push({ suit, value });
+                });
+            });
+            return deck;
+        };
+
         const App = () => {
-          return <h1>Card Component Ready</h1>;
+            const [deck, setDeck] = React.useState(createDeck());
+            const [hand, setHand] = React.useState([]);
+
+            // Function to draw a card from the deck
+            const drawCard = () => {
+                if (deck.length === 0) return;
+                const index = Math.floor(Math.random() * deck.length);
+                const card = deck[index];
+                setDeck(deck.filter((_, i) => i !== index));
+                setHand([...hand, card]);
+            };
+
+            return (
+                <div>
+                    <div className="deck" onClick={drawCard}>
+                        Deck ({deck.length})
+                    </div>
+                    <div className="hand">
+                        {hand.map((card, index) => (
+                            <Card key={index} suit={card.suit} value={card.value} />
+                        ))}
+                    </div>
+                </div>
+            );
         };
-      
+
         ReactDOM.render(<App />, document.getElementById('root'));
-      </script>
-      
+    </script>
+
 </body>
 
 </html>
