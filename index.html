@@ -23,9 +23,8 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <!-- Embedded React code -->
-
     <script type="text/babel">
-        // Card component remains unchanged
+        // Card component: displays the card's value and suit.
         const Card = ({ suit, value, picked, onClick }) => {
             const redSuits = ["♥", "♦"];
             return (
@@ -35,7 +34,7 @@
             );
         };
 
-        // Function to create a 52-card deck
+        // Function to create a standard 52-card deck.
         const createDeck = () => {
             const suits = ["♥", "♦", "♣", "♠"];
             const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
@@ -51,8 +50,10 @@
         const App = () => {
             const [deck, setDeck] = React.useState(createDeck());
             const [hand, setHand] = React.useState([]);
+            // Fixed: Added state for pickedIndex.
+            const [pickedIndex, setPickedIndex] = React.useState(null);
 
-            // Function to draw a card from the deck
+            // Function to draw a card from the deck.
             const drawCard = () => {
                 if (deck.length === 0) return;
                 const index = Math.floor(Math.random() * deck.length);
@@ -61,14 +62,14 @@
                 setHand([...hand, card]);
             };
 
-            // New handler wrapping drawCard
+            // Handler for deck click.
             const handleDeckClick = () => {
                 if (deck.length > 0) {
                     drawCard();
                 }
             };
 
-            // Function to select a card or swap if one is already picked
+            // Function to select a card or swap if one is already picked.
             const handleCardClick = (index) => {
                 if (pickedIndex === null) {
                     setPickedIndex(index);
@@ -76,14 +77,14 @@
                     setPickedIndex(null);
                 } else {
                     const newHand = [...hand];
-                    // Correct swap: swap the elements at pickedIndex and the new index
+                    // Swap the elements at pickedIndex and the new index.
                     [newHand[pickedIndex], newHand[index]] = [newHand[index], newHand[pickedIndex]];
                     setHand(newHand);
                     setPickedIndex(null);
                 }
             };
 
-            // New function: Deal a specific number of cards
+            // Function to deal a specific number of cards.
             const dealCards = (num) => {
                 const combinedDeck = [...deck, ...hand];
                 let newHand = [];
@@ -98,12 +99,14 @@
                 setPickedIndex(null);
             };
 
+            // Reset the deck and hand.
             const resetDeck = () => {
                 setDeck([...deck, ...hand]);
                 setHand([]);
                 setPickedIndex(null);
             };
 
+            // Toss the currently picked card.
             const tossCard = () => {
                 if (pickedIndex !== null) {
                     setHand(hand.filter((_, i) => i !== pickedIndex));
@@ -111,6 +114,7 @@
                 }
             };
 
+            // Regroup (shuffle) the hand.
             const regroupHand = () => {
                 const newHand = [...hand];
                 for (let i = newHand.length - 1; i > 0; i--) {
@@ -120,6 +124,7 @@
                 setHand(newHand);
             };
 
+            // Add a wildcard (random card) to the hand.
             const addWildcard = () => {
                 const suits = ["♥", "♦", "♣", "♠"];
                 const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
