@@ -82,20 +82,43 @@
                 }
             };
 
+            // New function: Deal a specific number of cards
+            const dealCards = (num) => {
+                const combinedDeck = [...deck, ...hand];
+                let newHand = [];
+                let remainingDeck = combinedDeck;
+                for (let i = 0; i < num && remainingDeck.length > 0; i++) {
+                    const index = Math.floor(Math.random() * remainingDeck.length);
+                    newHand.push(remainingDeck[index]);
+                    remainingDeck = remainingDeck.filter((_, j) => j !== index);
+                }
+                setDeck(remainingDeck);
+                setHand(newHand);
+                setPickedIndex(null);
+            };
+
             return (
                 <div>
+                    <div className="d-flex justify-content-center mb-3">
+                        <button onClick={() => dealCards(5)}>Deal 5</button>
+                    </div>
                     <div className="deck" onClick={drawCard}>
                         Deck ({deck.length})
                     </div>
                     <div className="hand">
                         {hand.map((card, index) => (
-                            <Card key={index} suit={card.suit} value={card.value} />
+                            <Card
+                                key={index}
+                                suit={card.suit}
+                                value={card.value}
+                                picked={pickedIndex === index}
+                                onClick={() => handleCardClick(index)}
+                            />
                         ))}
                     </div>
                 </div>
             );
         };
-
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
 
